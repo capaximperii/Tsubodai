@@ -15,14 +15,20 @@
 int _getch();
 #define FILE_SEPARATOR '/'
 #define LS_COMMAND      "ls %s"
+
+#define CursorBackward() printf("\033[1D")
+
 #else
 #include <conio.h>
 #define FILE_SEPARATOR '\\'
 #define LS_COMMAND      "@dir /b %s"
+
+#define CursorBackward() printf("\b")
+
 #endif
 
 
-
+#undef  CTRL // We will not use CTRL from linux specific termios.
 #define CTRL(c) (c - '@')
 #define ESCAPE 27
 #define NUMLOCK_OFF 0

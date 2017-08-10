@@ -175,10 +175,11 @@ ConsoleAction KeyHandler(char c)
                 return CONSOLE_HISTORY_LOAD;
             }
             else if (tmp == 'C') {
-            if(console->cursorPosition <= console->bufCount) {
+            if(console->cursorPosition < console->bufCount) {
                     console->cursorPosition ++;
                 }
-            else if(tmp == 'D')
+            }
+            else if(tmp == 'D') {
                 if(console->cursorPosition > 0) {
                     console->cursorPosition --;
                 }
@@ -197,7 +198,7 @@ ConsoleAction KeyHandler(char c)
                     return CONSOLE_HISTORY_LOAD;
                 }
                 else if (tmp == ARROW_RIGHT_AFTER_ESCAPE) {
-                    if(console->cursorPosition <= console->bufCount) {
+                    if(console->cursorPosition < console->bufCount) {
                         console->cursorPosition ++;
                     }
                 }
@@ -209,7 +210,8 @@ ConsoleAction KeyHandler(char c)
             }
             break;
         case ' ':
-            console->isSpacePressed ++;
+            if(!console->bufCount) break; // Dont encourage leading spaces.
+                console->isSpacePressed ++;
         default:
             if(isprint(c)) {
                   AddToBuffer(c);
@@ -218,6 +220,9 @@ ConsoleAction KeyHandler(char c)
     printf("\r% *c", 80, ' '); // Clears line.
     fflush(stdout);
     printf("\r%s %s", console->promptchar, console->buffer);
+    // Position the cursor.
+    for(int cursor=0; cursor < console->bufCount - console->cursorPosition && console->bufCount > console->cursorPosition; cursor ++)
+        CursorBackward();
     fflush(stdout);
     return CONSOLE_CONTINUE;
 }
