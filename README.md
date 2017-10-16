@@ -4,7 +4,7 @@
 
 Trick question! Its not a thing, its a [person](https://en.wikipedia.org/wiki/Subutai).
 
-As one of the greatest commander in history, he serves as inspiration to a command line tool.
+As one of the greatest commander in history, he lends his name to this command line framework.
 
 
 Basic useful feature list:
